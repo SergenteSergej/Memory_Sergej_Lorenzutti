@@ -29,12 +29,6 @@ public class GameMenager : MonoBehaviour
     float deltaY;
 
     [SerializeField]
-    int columns = 5;
-
-    [SerializeField]
-    int rows = 6;
-
-    [SerializeField]
     GameObject winUI;
 
     [SerializeField] 
@@ -48,12 +42,25 @@ public class GameMenager : MonoBehaviour
     InteractiveCard selectedCard1;
     InteractiveCard selectedCard2;
 
+    int columns;
+    int rows;
+
     private void Start()
     {
+        rows = GameSettings.rows;
+        columns = GameSettings.columns;
 
-        if (rows * columns != images.Length * 2)
+        int totalCards = rows * columns;
+
+        if (totalCards % 2 != 0)
         {
-            Debug.LogWarning("number of r*c in not equal to provided cards, quit...");
+            Debug.LogError("The total number isnt paire");
+            return;
+        }
+
+        if (images.Length * 2 < totalCards)
+        {
+            Debug.LogError("Not enought images");
             return;
         }
 
@@ -178,6 +185,6 @@ public class GameMenager : MonoBehaviour
    
     public void PlayAgain()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("MenuScene");
     }
 }
