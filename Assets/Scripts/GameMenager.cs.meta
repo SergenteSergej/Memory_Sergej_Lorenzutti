@@ -1,2 +1,15 @@
 fileFormatVersion: 2
 guid: e0197701fcb87f24a92cf128a97fcd61
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - card: {instanceID: 0}
+  - winUI: {instanceID: 0}
+  - matchedSound: {instanceID: 0}
+  - wrongSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

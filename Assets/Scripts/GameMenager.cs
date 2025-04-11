@@ -37,8 +37,11 @@ public class GameMenager : MonoBehaviour
     [SerializeField]
     GameObject winUI;
 
-    [SerializeField]
-    AudioSource matchedPairAudioSurce;
+    [SerializeField] 
+    AudioSource matchedSound;
+
+    [SerializeField] 
+    AudioSource wrongSound;
 
     int pairs;
 
@@ -47,6 +50,7 @@ public class GameMenager : MonoBehaviour
 
     private void Start()
     {
+
         if (rows * columns != images.Length * 2)
         {
             Debug.LogWarning("number of r*c in not equal to provided cards, quit...");
@@ -58,23 +62,27 @@ public class GameMenager : MonoBehaviour
         System.Random random = new System.Random();
         images = images.OrderBy(x => random.Next()).ToArray();
 
+        Camera cam = Camera.main;
+
         cards = new Vector3[rows * columns];
 
-        float dx = startX;
-        float dy = startY;
+        Vector3 currentPos = new Vector3(startX, startY, planeZ);
 
         int counter = 0;
 
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < cards.Length; i++)
         {
-            for (int j = 0; j < columns; j++)
-            {
-                cards[counter++] = new Vector3(dx, dy, planeZ);
-                dx += deltaX;
-            }
+            cards[counter++] = currentPos;
 
-            dx = startX;
-            dy = deltaY;
+            currentPos.x += deltaX;
+
+            
+            Vector3 viewport = cam.WorldToViewportPoint(currentPos);
+            if (viewport.x > 1f)
+            {
+                currentPos.x = startX;
+                currentPos.y -= deltaY;
+            }
         }
 
         cards = cards.OrderBy(x => random.Next()).ToArray();
@@ -135,7 +143,7 @@ public class GameMenager : MonoBehaviour
             {
                 //OK match
 
-                matchedPairAudioSurce.Play();
+                matchedSound.GetComponent<AudioSource>().Play();
 
                 selectedCard1.HideAndDestroy();
                 selectedCard2.HideAndDestroy();
@@ -156,6 +164,9 @@ public class GameMenager : MonoBehaviour
             else
             {
                 //Flip back
+
+                wrongSound.GetComponent<AudioSource>().Play();
+
                 selectedCard1.ResetMe();
                 selectedCard2.ResetMe();
 
