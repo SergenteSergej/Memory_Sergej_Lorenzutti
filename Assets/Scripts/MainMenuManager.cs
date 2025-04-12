@@ -6,7 +6,7 @@ public class MainMenuManager : MonoBehaviour
     public void StartGameEasy()
     {
         GameSettings.rows = 2;
-        GameSettings.columns = 2;
+        GameSettings.columns = 3;
         SceneManager.LoadScene("GameScene");
     }
 
