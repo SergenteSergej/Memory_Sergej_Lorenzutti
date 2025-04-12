@@ -4,6 +4,8 @@ public class PersistentMusic : MonoBehaviour
 {
     private static PersistentMusic instance;
 
+    
+
     void Awake()
     {
         if (instance != null && instance != this)
